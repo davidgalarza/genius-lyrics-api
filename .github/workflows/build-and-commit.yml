@@ -3,7 +3,7 @@ name: Build and commit JS
 on:
   push:
     branches:
-      - master  # o la rama que uses
+      - compiled  # o la rama que uses
   workflow_dispatch:  # también lo puedes correr manualmente
 
 jobs:
