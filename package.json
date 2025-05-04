@@ -1,0 +1,46 @@
+{
+	"name": "genius-lyrics-api",
+	"version": "4.3.0",
+	"main": "lib/index.js",
+	"types": "lib/index.d.ts",
+	"scripts": {
+	    "build": "tsc"
+	},
+	"files": [
+		"/lib"
+	],
+	"author": {
+		"name": "Faisal Arshed",
+		"url": "https://github.com/farshed"
+	},
+	"contributors": [
+		{
+			"name": "Garlicvideos",
+			"url": "https://github.com/Garlicvideos"
+		},
+		{
+			"name": "hi",
+			"url": "https://github.com/hi021"
+		}
+	],
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/farshed/genius-lyrics-api.git"
+	},
+	"keywords": [
+		"genius",
+		"lyrics",
+		"scraper",
+		"genius-lyric",
+		"genius-api",
+		"lyrics-scraper"
+	],
+	"dependencies": {
+		"cheerio": "^1.0.0"
+	},
+	"devDependencies": {
+		"typescript": "^5.8.3"
+	},
+	"packageManager": "pnpm@10.9.0+sha512.0486e394640d3c1fb3c9d43d49cf92879ff74f8516959c235308f5a8f62e2e19528a65cdc2a3058f587cde71eba3d5b56327c8c33a97e4c4051ca48a10ca2d5f"
+}
