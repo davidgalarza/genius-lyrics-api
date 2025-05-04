@@ -1,36 +1,44 @@
-name: Build and commit JS
+name: Build and push to build branch
 
 on:
   push:
     branches:
-      - compiled  # o la rama que uses
-  workflow_dispatch:  # también lo puedes correr manualmente
+      - master
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout main
         uses: actions/checkout@v3
-        with:
-          persist-credentials: false  # evitamos usar token del bot
 
-      - name: Setup Node.js
+      - name: Set up Node
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: 18
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build
-        run: npm run build  # asegúrate de que tu script build exista
-
-      - name: Commit compiled files
+      - name: Install deps and build
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add lib/ -f
-          git commit -m 'chore: auto-commit dist [skip ci]' || echo "No changes to commit"
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
+          npm install
+          npm run build
+
+      - name: Copy built files to temp folder
+        run: |
+          mkdir out
+          cp -r lib out/  # usa tu carpeta de salida, como dist o lib
+          cp package.json out/
+          cp README.md out/ || true
+
+      - name: Push to build branch
+        run: |
+          cd out
+          git init
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Build from main"
+          git branch -M build
+          git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git push -f origin build
